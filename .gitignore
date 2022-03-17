@@ -1,8 +1,9 @@
 .idea/
+src/main/java/util/Token.java
 Discord-Bot.iml
 datenbank.db
 target/
 dependency-reduced-pom.xml
-identifier.sqlite
+L11ON.config
 MyLogFile.log
 MyLogFile.log.lck

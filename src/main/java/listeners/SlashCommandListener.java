@@ -1,13 +1,14 @@
 package listeners;
 
 import core.CommandManager;
-import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Config;
+
+import java.io.IOException;
 
 public class SlashCommandListener extends ListenerAdapter  {
 
@@ -16,17 +17,21 @@ public class SlashCommandListener extends ListenerAdapter  {
 
 
     @Override
-    public void onSlashCommand(SlashCommandEvent event) {
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         User user = event.getUser();
 
         if (user.isBot()) {
             return;
         }
 
-        String prefix = Config.PREFIX;
+        String prefix = Config.prefix;
         String raw = event.getName();
 
-        manager.handle(event);
+        try {
+            manager.handleSlashCommand(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -5,18 +5,13 @@ import core.CommandManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.dv8tion.jda.api.interactions.components.selections.SelectOption;
-import net.dv8tion.jda.api.interactions.components.selections.SelectionMenu;
+import net.dv8tion.jda.api.interactions.components.selections.SelectMenu;
 import util.Config;
 
 import java.util.ArrayList;
@@ -31,13 +26,13 @@ public class helpCommand implements ICommand{
     }
 
     @Override
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
         EmbedBuilder builder = new EmbedBuilder();
 
-        SelectionMenu menu;
+        SelectMenu menu;
 
-        SelectionMenu.Builder selectionMenuBuilder = SelectionMenu.create("menu:class")
+        SelectMenu.Builder selectionMenuBuilder = SelectMenu.create("menu:class")
                 .setPlaceholder("Select your Command to get help");
 
 
@@ -81,10 +76,6 @@ public class helpCommand implements ICommand{
                 "Usage: `!!help [command]`";
     }
 
-    public String getCategory() {
-        return "";
-    }
-
     @Override
     public CommandData getCommandData() {
 
@@ -93,54 +84,16 @@ public class helpCommand implements ICommand{
             choices.add(new Command.Choice(cmd.getName(), cmd.getName()));
         }
 
-        return new CommandData(this.getName(), this.getHelp())
+        return Commands.slash(this.getName(), this.getHelp())
                                 .addOptions(List.of(
                                         new OptionData(OptionType.STRING,"command","Get hel pto the specified Command", false)
                                                 .addChoices(choices))
                                 ).setDefaultEnabled(true);
     }
 
-
-    public List<String> getAliases() {
-        return List.of("commands", "cmds", "commandlist");
-    }
-
-    public static void categorieHelp(Member member,String categorie,Message message){
-
-        TextChannel channel = message.getTextChannel();
-
-        EmbedBuilder builder = new EmbedBuilder();
-
-        builder
-                .setTitle("L11ons all Commands")
-                .setColor(10181046)
-                .setDescription("Help for all commands")
-                .setFooter("Use " + Config.PREFIX + "help <command> for command help");
-
-        /*
-        for (ICommand cmd:CommandManager.commands) {
-            if (cmd.getCategory().equalsIgnoreCase(categorie)){
-                builder.addField(cmd.getName(),"`" + cmd.getHelp() + "`",true);
-            }
-        }
-        */
-
-        StringBuilder commandList = new StringBuilder();
-
-        for (ICommand cmd:CommandManager.commands) {
-            if (cmd.getCategory().equalsIgnoreCase(categorie)){
-                commandList.append("`" + cmd.getName() + "`, ");
-            }
-        }
-        commandList.deleteCharAt(commandList.length() - 1);
-        
-        builder.setTitle(Config.emojiForCategorie.get(categorie) + " " + categorie.replace("Cmd","") + " Commands");
-        builder.setDescription(commandList);
-
-
-        message.editMessage(builder.build()).queue();
-
-
+    @Override
+    public String getButtonPrefix() {
+        return "none";
     }
 
 

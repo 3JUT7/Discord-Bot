@@ -6,16 +6,17 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import util.Config;
 
 import java.util.List;
 
 public class addRoleCommand implements ICommand {
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
         List<Member> members;
 
@@ -54,26 +55,21 @@ public class addRoleCommand implements ICommand {
         return "add Role to all members";
     }
 
-    public String getCategory() {
-        return "UtilityCmd";
-    }
-
-    public List<String> getAliases() {
-        return List.of("aR");
-    }
-
-
     public Permission getPermission() {
         return null;
     }
 
     public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp()).addOptions(List.of(
+        return Commands.slash(this.getName(), this.getHelp()).addOptions(List.of(
                 new OptionData(OptionType.ROLE, "role_to_have", "Role that the member needs to have to get the other roles").setRequired(true),
                 new OptionData(OptionType.ROLE, "role_to_get", "Role that the member gets").setRequired(true)
 
             )
         ).setDefaultEnabled(false);
+    }
+
+    public String getButtonPrefix() {
+        return "none";
     }
 }
 

@@ -5,7 +5,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,17 +67,18 @@ public class stickyRoles {
     }
 
 
-    public static void guildMemberLeave(GuildMemberLeaveEvent event){
-            Long memberId = event.getMember().getIdLong();
-            Long guildId = event.getGuild().getIdLong();
+    public static void guildMemberLeave(GuildMemberRemoveEvent event){
+        Long memberId = event.getMember().getIdLong();
+        Long guildId = event.getGuild().getIdLong();
 
-            LiteSQL.onUpdate("DELETE FROM stickyRoles WHERE memberId='" + memberId + "' AND guildId='" + guildId + "'");
+        System.out.println("leaving");
+        LiteSQL.onUpdate("DELETE FROM stickyRoles WHERE memberId='" + memberId + "' AND guildId='" + guildId + "'");
 
-            List<Role> roles = event.getMember().getRoles();
+        List<Role> roles = event.getMember().getRoles();
 
-            for (Role r : roles) {
-                LiteSQL.onUpdate("INSERT INTO stickyRoles (guildId, memberId, roleId) VALUES(" + guildId + ", " + memberId + ", " + r.getIdLong() + ")");
-            }
+        for (Role r : roles) {
+            LiteSQL.onUpdate("INSERT INTO stickyRoles (guildId, memberId, roleId) VALUES(" + guildId + ", " + memberId + ", " + r.getIdLong() + ")");
+        }
 
     }
 

@@ -7,16 +7,17 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.List;
 
 public class changeNicknameCommand implements ICommand {
 
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
         Role role = event.getOption("role").getAsRole();
         String nickname = event.getOption("nickname").getAsString();
@@ -38,13 +39,9 @@ public class changeNicknameCommand implements ICommand {
         return "Change the Nickname of all Members with a role ";
     }
 
-    public String getCategory() {
-        return "UtilityCmd";
-    }
-
     @Override
     public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp())
+        return Commands.slash(this.getName(), this.getHelp())
                 .setDefaultEnabled(false)
                 .addOptions(List.of(
                         new OptionData(OptionType.ROLE,"role", "The Role the user needs to have to get his nickname changed",true),
@@ -52,11 +49,7 @@ public class changeNicknameCommand implements ICommand {
                 ));
     }
 
-    public List<String> getAliases() {
-        return List.of("ck");
-    }
-
-    public Permission getPermission() {
-        return null;
+    public String getButtonPrefix() {
+        return "none";
     }
 }

@@ -3,12 +3,12 @@ package command.commands.AdminCommands;
 import command.ICommand;
 import core.CommandManager;
 import core.LiteSQL;
-import listeners.SlashCommandListener;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 
@@ -21,7 +21,7 @@ import static listeners.SlashCommandListener.manager;
 
 public class commandSettingsCommand implements ICommand {
     @Override
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         ICommand cmd = manager.getCommand(event.getOption("command").getAsString());
         switch (event.getSubcommandName()){
             case "enable": {
@@ -73,11 +73,6 @@ public class commandSettingsCommand implements ICommand {
     }
 
     @Override
-    public String getCategory() {
-        return "admin";
-    }
-
-    @Override
     public Permission getPermission() {
         return null;
     }
@@ -89,7 +84,7 @@ public class commandSettingsCommand implements ICommand {
             choices.add(new Command.Choice(cmd.getName(), cmd.getName()));
         }
 
-        return new CommandData(this.getName(), this.getHelp())
+        return Commands.slash(this.getName(), this.getHelp())
                 .addSubcommands(List.of(
                         new SubcommandData("enable","Enable or disable a command")
                                 .addOptions(List.of(
@@ -98,5 +93,9 @@ public class commandSettingsCommand implements ICommand {
                                     new OptionData(OptionType.BOOLEAN,"boolean","boolean if you want to enable the command")
                                 ))
                 )).setDefaultEnabled(false);
+    }
+
+    public String getButtonPrefix() {
+        return "none";
     }
 }

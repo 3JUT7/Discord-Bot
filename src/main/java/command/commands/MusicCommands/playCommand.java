@@ -3,15 +3,15 @@ package command.commands.MusicCommands;
 
 import command.ICommand;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import java.util.List;
 
 public class playCommand implements ICommand {
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
 
     }
@@ -24,17 +24,13 @@ public class playCommand implements ICommand {
         return "Connects to your current voicechannel if not connected and plays music by link or by yt search";
     }
 
-    public String getCategory() {
-        return "MusicCmd";
-    }
-
     public List<String> getAliases() {
         return List.of("p");
     }
 
 
     public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp())
+        return Commands.slash(this.getName(), this.getHelp())
                 .addOption(OptionType.STRING,"Song name or url","the name of the song the bot should play").setDefaultEnabled(false);
     }
 
@@ -53,4 +49,9 @@ public class playCommand implements ICommand {
     public Permission getPermission() {
         return null;
     }
+
+    public String getButtonPrefix() {
+        return "none";
+    }
+
 }

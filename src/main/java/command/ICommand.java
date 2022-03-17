@@ -1,39 +1,29 @@
 package command;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface ICommand {
-    void handle(SlashCommandEvent event);
+    void handle(SlashCommandInteractionEvent event) throws IOException;
 
     String getName();
 
     String getHelp();
 
-    String getCategory();
-
     default Permission getPermission() {
         return null;
-    }
-
-    default List<String> getAliases() {
-        return List.of();
     }
 
     default CommandData getCommandData() {
         return null;
     }
 
-    default List<String> getButtons() {
-        return List.of();
-    }
+    String getButtonPrefix();
 
-    default void ButtonAction(ButtonClickEvent event) {}
+    default void ButtonAction(ButtonInteractionEvent event) {}
 }

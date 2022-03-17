@@ -3,15 +3,16 @@ package command.commands.ManagemantCommands;
 import command.ICommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.List;
 
 public class voiceMoveCommand implements ICommand {
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
 
 
@@ -19,8 +20,8 @@ public class voiceMoveCommand implements ICommand {
         MessageChannel channel = event.getChannel();
         Guild guild = event.getGuild();
 
-        GuildChannel channelMoveFrom = event.getOption("channelfrom").getAsGuildChannel();
-        GuildChannel channelMoveTo = event.getOption("channelto").getAsGuildChannel();
+        AudioChannel channelMoveFrom = (AudioChannel) event.getOption("channelfrom").getAsGuildChannel();
+        AudioChannel channelMoveTo = (AudioChannel) event.getOption("channelto").getAsGuildChannel();
 
 
         if (!member.hasPermission(Permission.VOICE_MOVE_OTHERS)){
@@ -59,16 +60,8 @@ public class voiceMoveCommand implements ICommand {
         return "Moves all Users of a Voice to another Voice";
     }
 
-    public String getCategory() {
-        return "UtilityCmd";
-    }
-
-    public List<String> getAliases() {
-        return List.of("vm");
-    }
-
     public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp()).addOptions(List.of(
+        return Commands.slash(this.getName(), this.getHelp()).addOptions(List.of(
                 new OptionData(OptionType.CHANNEL, "channelfrom", "The Channel where to move the Members from. Needs to be a voice channel").setRequired(true),
                 new OptionData(OptionType.CHANNEL, "channelto", "The Channel where to move the Members to. Needs to be a voice channel").setRequired(true)
 
@@ -78,5 +71,9 @@ public class voiceMoveCommand implements ICommand {
 
     public Permission getPermission() {
         return null;
+    }
+
+    public String getButtonPrefix() {
+        return "none";
     }
 }

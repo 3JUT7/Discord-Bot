@@ -3,26 +3,25 @@ package command.commands.MusicCommands;
 import command.ICommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import java.util.List;
 
 
 public class joinCommand implements ICommand {
     @Override
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
         Guild guild = event.getGuild();
         Member member = event.getMember();
         MessageChannel channel = event.getChannel();
 
-        if (member.getVoiceState().inVoiceChannel()){
+        if (member.getVoiceState().inAudioChannel()){
 
-            VoiceChannel voiceChannel = member.getVoiceState().getChannel();
-            guild.getAudioManager().openAudioConnection(voiceChannel);
+            AudioChannel audioChannel = member.getVoiceState().getChannel();
+            guild.getAudioManager().openAudioConnection(audioChannel);
         }else {
             channel.sendMessage("**You have to be in a voice channel to use this command.**").queue();
         }
@@ -37,10 +36,6 @@ public class joinCommand implements ICommand {
         return null;
     }
 
-    public String getCategory() {
-        return "MusicCmd";
-    }
-
     public List<String> getAliases() {
         return List.of("summon");
     }
@@ -50,6 +45,10 @@ public class joinCommand implements ICommand {
     }
 
     public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp());
+        return Commands.slash(this.getName(), this.getHelp());
+    }
+
+    public String getButtonPrefix() {
+        return "none";
     }
 }

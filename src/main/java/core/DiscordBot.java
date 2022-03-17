@@ -20,6 +20,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import static util.Config.token;
+
 public class DiscordBot {
 
     public static JDA jda;
@@ -30,10 +32,12 @@ public class DiscordBot {
 
 
 
-    public DiscordBot() throws LoginException{
-        LiteSQL.connect();
+    public DiscordBot() throws LoginException{LiteSQL.connect();
 
-        this.builder = JDABuilder.createDefault(Token.token);
+
+        Config.loadConfig();
+
+        this.builder = JDABuilder.createDefault(token);
 
         builder
                 .setAutoReconnect(true)
@@ -54,13 +58,16 @@ public class DiscordBot {
                         new SlashCommandListener()
                 );
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setActivity(Activity.playing(Config.PREFIX+"help"));
+        builder.setActivity(Activity.playing(Config.prefix +"help"));
 
         jda = this.builder.build();
 
-
-
         System.out.println("Bot online");
+
+
+        //Guild guild = jda.getGuilds().stream().filter(i -> i.getId().contains("944667793066967120")).findFirst().get();
+
+        //System.out.println(guild.retrieveInvites());
 
 
 

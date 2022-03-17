@@ -2,13 +2,14 @@ package command.commands.AdminCommands;
 
 import command.ICommand;
 import core.CommandManager;
-import core.LiteSQL;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
+import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 import util.Config;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import static core.DiscordBot.jda;
 
 public class updateCommand implements ICommand {
     @Override
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
 
         Guild guild = event.getGuild();
@@ -41,6 +42,10 @@ public class updateCommand implements ICommand {
 
         });
 
+
+
+
+
         for (ICommand cmd: CommandManager.commands) {
 
             guild.upsertCommand(cmd.getCommandData()).queue(command -> {
@@ -53,6 +58,10 @@ public class updateCommand implements ICommand {
 
             });
         }
+
+
+        CommandData cmd = Commands.slash("trest","test");
+
     }
 
     @Override
@@ -66,23 +75,17 @@ public class updateCommand implements ICommand {
     }
 
     @Override
-    public String getCategory() {
-        return "SettingCmd";
-    }
-
-    @Override
     public Permission getPermission() {
         return null;
     }
 
     @Override
-    public List<String> getAliases() {
-        return List.of("uc");
+    public CommandData getCommandData() {
+        return Commands.slash(this.getName(), this.getHelp()).setDefaultEnabled(false);
     }
 
-    @Override
-    public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp()).setDefaultEnabled(false);
+    public String getButtonPrefix() {
+        return "none";
     }
 
 

@@ -1,18 +1,46 @@
 package util;
 
 
-import net.dv8tion.jda.api.entities.Role;
-import java.awt.*;
+import de.sematre.dsbmobile.DSBMobile;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
-import java.util.List;
 
 
 public class Config{
-    public static final String PREFIX = ".";
 
-    public static final List<String> commandCategories = Arrays.asList("UtilityCmd", "SettingCmd", "MinigameCmd", "MusicCmd, ManagemantCmd");
-    public static final Map<String,String> emojiForCategorie = Map.of("UtilityCmd",":tools:","SettingCmd",":gear:","MinigameCmd",":game_die:","MusicCmd",":notes:");
-    public static final String ownerId = "562708005905235978";
+    public static Properties prop = new Properties();
+
+
+    public static DSBMobile dsbMobile;
+
+    public static String prefix;
+    public static String ownerId;
+    public static String token;
+    public static String dsbMobileUsername;
+    public static String dsbMobilePassword;
+
+
+
+    public static void loadConfig(){
+
+        String fileName = "L11ON.config";
+        try (FileInputStream fis = new FileInputStream(fileName)) {
+            prop.load(fis);
+        } catch (IOException ignored) {
+        }
+
+        token = prop.getProperty("L11ON.token");
+        ownerId = prop.getProperty("L11ON.ownerId");
+        prefix = prop.getProperty("L11ON.prefix");
+
+        dsbMobileUsername = prop.getProperty("DSBmobile.username");
+        dsbMobilePassword = prop.getProperty("DSBmobile.password");
+
+        dsbMobile  = new DSBMobile(dsbMobileUsername, dsbMobilePassword);
+
+    }
+
 
 }

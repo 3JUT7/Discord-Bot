@@ -5,9 +5,10 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import static java.lang.Math.toIntExact;
 public class purgeCommand implements ICommand {
 
     @Override
-    public void handle(SlashCommandEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
 
         Map<Member, Integer> userList = new HashMap<Member, Integer>(); //List of how many Messages of the deleted ones every Member has send
 
@@ -78,22 +79,17 @@ public class purgeCommand implements ICommand {
     }
 
     @Override
-    public String getCategory() {
-        return "ManagemantCmd";
-    }
-
-    @Override
     public Permission getPermission() {
         return null;
     }
 
     @Override
-    public List<String> getAliases() {
-        return List.of("clear");
+    public CommandData getCommandData() {
+        return Commands.slash(this.getName(), this.getHelp()).addOption(OptionType.INTEGER,"amount","amount of messages to purge", true).setDefaultEnabled(false);
     }
 
     @Override
-    public CommandData getCommandData() {
-        return new CommandData(this.getName(), this.getHelp()).addOption(OptionType.INTEGER,"amount","amount of messages to purge", true).setDefaultEnabled(false);
+    public String getButtonPrefix() {
+        return "none";
     }
 }
