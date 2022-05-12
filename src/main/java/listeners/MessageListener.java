@@ -29,15 +29,7 @@ public class MessageListener extends ListenerAdapter {
 
                     System.out.println(cmd.getName());
 
-                    guild.upsertCommand(cmd.getCommandData()).queue(command -> {
-
-                        command.updatePrivileges(guild, List.of(
-                                        CommandPrivilege.enable(Objects.requireNonNull(jda.getUserById(Config.ownerId)))
-                                        //CommandPrivilege.enable(guild.getRoleById(791265130489839628L))
-                                )
-                        ).queue();
-
-                    });
+                    guild.upsertCommand(cmd.getCommandData()).queue();
                 }
 
             }

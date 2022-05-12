@@ -3,8 +3,10 @@ package core;
 import command.ICommand;
 import command.commands.AdminCommands.commandSettingsCommand;
 import command.commands.AdminCommands.updateCommand;
+import command.commands.GameCommands.schafkopfCommand;
 import command.commands.ManagemantCommands.*;
-import command.commands.Quizduell.QuizduellCommand;
+import command.commands.QuizduellCommands.QuizduellCommand;
+import command.commands.UserTrackerCommands.UserTracker;
 import command.commands.UtilityCommands.helpCommand;
 import command.commands.UtilityCommands.pingCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 public class CommandManager {
     public static List<ICommand> commands = new ArrayList<>();
@@ -37,6 +40,9 @@ public class CommandManager {
         addCommand(new commandSettingsCommand());
         addCommand(new talkCommand());
         addCommand(new QuizduellCommand());
+        //addCommand(new UserTracker());
+        addCommand(new schafkopfCommand());
+
     }
 
     private void addCommand(ICommand cmd){
@@ -89,6 +95,8 @@ public class CommandManager {
                         .setFooter(event.getJDA().getUserById(Config.ownerId).getAsTag(), event.getJDA().getUserById(Config.ownerId).getAvatarUrl());
 
                 event.replyEmbeds(builder.build()).queue();
+
+                set.close();
 
                 return;
 

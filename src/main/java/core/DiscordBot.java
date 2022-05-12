@@ -2,6 +2,7 @@ package core;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sun.tools.javac.Main;
 import listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -12,9 +13,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import util.*;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -44,10 +47,12 @@ public class DiscordBot {
                 .enableIntents(
                         GatewayIntent.GUILD_MEMBERS,
                         GatewayIntent.GUILD_MESSAGES,
-                        GatewayIntent.GUILD_PRESENCES)
+                        GatewayIntent.GUILD_PRESENCES
+                )
 
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
+                .enableCache(CacheFlag.ONLINE_STATUS, CacheFlag.ACTIVITY)
                 .addEventListeners(
                         new MessageListener(),
                         new VoiceListener(),
@@ -55,8 +60,11 @@ public class DiscordBot {
                         new ReadyListener(),
                         new ButtonListener(),
                         new SelectionMenuListener(),
-                        new SlashCommandListener()
+                        new SlashCommandListener(),
+                        new ReactionListener(),
+                        new OnlineListener()
                 );
+
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing(Config.prefix +"help"));
 
@@ -65,11 +73,7 @@ public class DiscordBot {
         System.out.println("Bot online");
 
 
-        //Guild guild = jda.getGuilds().stream().filter(i -> i.getId().contains("944667793066967120")).findFirst().get();
-
         //System.out.println(guild.retrieveInvites());
-
-
 
 
     }

@@ -15,28 +15,7 @@ import static core.DiscordBot.jda;
 
 public class ReadyListener extends ListenerAdapter {
     @Override
-    public void onReady(ReadyEvent event){
-        /*
-        Guild guild = event.getJDA().getGuildById(790885170411601920L);
-
-
-        for (ICommand cmd:CommandManager.commands) {
-
-            guild.upsertCommand(cmd.getCommandData()).queue(command -> {
-
-                command.updatePrivileges(guild, List.of(
-                        CommandPrivilege.enable(jda.getUserById(Config.ownerId)),
-                        CommandPrivilege.enable(guild.getRoleById(791265130489839628L))
-                        )
-                ).queue();
-
-            });
-        }
-         */
+    public void onReady(ReadyEvent event) {
 
     }
-
-
-
-
 }

@@ -19,11 +19,9 @@ public interface ICommand {
         return null;
     }
 
-    default CommandData getCommandData() {
-        return null;
-    }
+    CommandData getCommandData();
 
-    String getButtonPrefix();
+    default String getButtonPrefix(){return null;};
 
     default void ButtonAction(ButtonInteractionEvent event) {}
 }

@@ -19,8 +19,8 @@ public class stickyRoles {
         Guild guild = event.getGuild();
         Member member = event.getMember();
 
-        Long guildId = guild.getIdLong();
-        Long memberId = member.getIdLong();
+        long guildId = guild.getIdLong();
+        long memberId = member.getIdLong();
         List<Long> roleIds = new ArrayList<Long>();
 
         if (member.getUser().isBot()){
@@ -34,6 +34,7 @@ public class stickyRoles {
 
 
         try {
+            assert set != null;
             if (set.getInt("stickyRoles") == 0){
                 return;
             }

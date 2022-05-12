@@ -22,7 +22,7 @@ public class LiteSQL {
             String url = "jdbc:sqlite:" + file.getPath();
             connection = DriverManager.getConnection(url);
 
-            System.out.println("Vernindung zur Datenbank hergestellt.");
+            System.out.println("Verbindung zur Datenbank hergestellt.");
 
 
             stmt = connection.createStatement();
