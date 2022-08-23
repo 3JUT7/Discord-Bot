@@ -15,11 +15,9 @@ public interface ICommand {
 
     String getHelp();
 
-    default Permission getPermission() {
-        return null;
-    }
-
     CommandData getCommandData();
+
+    CommandData commandDaten = null;
 
     default String getButtonPrefix(){return null;};
 

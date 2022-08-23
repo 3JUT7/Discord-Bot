@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -55,17 +56,13 @@ public class addRoleCommand implements ICommand {
         return "add Role to all members";
     }
 
-    public Permission getPermission() {
-        return null;
-    }
-
     public CommandData getCommandData() {
         return Commands.slash(this.getName(), this.getHelp()).addOptions(List.of(
                 new OptionData(OptionType.ROLE, "role_to_have", "Role that the member needs to have to get the other roles").setRequired(true),
                 new OptionData(OptionType.ROLE, "role_to_get", "Role that the member gets").setRequired(true)
 
             )
-        ).setDefaultEnabled(false);
+        ).setDefaultPermissions(DefaultMemberPermissions.DISABLED); 
     }
 
     public String getButtonPrefix() {

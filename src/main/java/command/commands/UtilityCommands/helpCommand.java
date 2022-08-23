@@ -4,9 +4,9 @@ import command.ICommand;
 import core.CommandManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -86,9 +86,11 @@ public class helpCommand implements ICommand{
 
         return Commands.slash(this.getName(), this.getHelp())
                                 .addOptions(List.of(
-                                        new OptionData(OptionType.STRING,"command","Get hel pto the specified Command", false)
+                                        new OptionData(OptionType.STRING,"command","Get help to the specified Command", false)
                                                 .addChoices(choices))
-                                ).setDefaultEnabled(true);
+                                )
+
+                .setDefaultPermissions(DefaultMemberPermissions.ENABLED);
     }
 
     @Override
@@ -97,7 +99,4 @@ public class helpCommand implements ICommand{
     }
 
 
-    public Permission getPermission() {
-        return null;
-    }
 }

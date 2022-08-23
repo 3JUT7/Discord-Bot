@@ -1,8 +1,5 @@
 package core;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sun.tools.javac.Main;
 import listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -29,7 +26,6 @@ public class DiscordBot {
 
     public static JDA jda;
     public JDABuilder builder;
-    public final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     public static Logger logger = Logger.getLogger("MyLog");
 

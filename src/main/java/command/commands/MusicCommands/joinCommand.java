@@ -1,7 +1,6 @@
 package command.commands.MusicCommands;
 
 import command.ICommand;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -38,10 +37,6 @@ public class joinCommand implements ICommand {
 
     public List<String> getAliases() {
         return List.of("summon");
-    }
-
-    public Permission getPermission() {
-        return null;
     }
 
     public CommandData getCommandData() {

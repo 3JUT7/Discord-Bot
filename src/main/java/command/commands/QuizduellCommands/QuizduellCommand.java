@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -45,6 +46,7 @@ public class QuizduellCommand implements ICommand {
 
 
     }
+
 
     public void challengePlayer(SlashCommandInteractionEvent event){
         User user = Objects.requireNonNull(event.getOption("user")).getAsUser();
@@ -89,13 +91,13 @@ public class QuizduellCommand implements ICommand {
 
         event.replyEmbeds(builder.build())
 
-                .queue(embed -> {
+                .queue(/*embed -> {
                     embed.retrieveOriginal().queue(msg -> {
                         msg.addReaction("upvote:953913306920402954").queue();
                         msg.addReaction("downvote:953913144332402698").queue();
-                    });
+                    });}*/
 
-                });
+                );
 
     }
 
@@ -113,9 +115,10 @@ public class QuizduellCommand implements ICommand {
         System.out.println(Arrays.toString(wrong_answers));
 
 
-        MessageReaction react = msg.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("upvote")).findFirst().get();
+        //MessageReaction react = msg.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("upvote")).findFirst().get();
 
 
+        /*
         if (react.getCount() > 1) {
             System.out.println("running SQL");
 
@@ -136,7 +139,7 @@ public class QuizduellCommand implements ICommand {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 
@@ -154,7 +157,8 @@ public class QuizduellCommand implements ICommand {
     @Override
     public CommandData getCommandData() {
         return Commands.slash(this.getName(), this.getHelp())
-                .setDefaultEnabled(true)
+
+                .setDefaultPermissions(DefaultMemberPermissions.ENABLED)
                 .addSubcommands(new SubcommandData("challenge", "Challenge another member for a game")
                         .addOptions(List.of(
                                         new OptionData(OptionType.USER, "user", "The user you want to challenge", true),

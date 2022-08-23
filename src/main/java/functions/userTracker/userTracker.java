@@ -16,6 +16,11 @@ public class userTracker {
 
     public static void newOnlineStatus (UserUpdateOnlineStatusEvent event){
 
+        if (true){
+            return;
+        }
+
+
         User user = event.getUser();
         long time = System.currentTimeMillis();
 

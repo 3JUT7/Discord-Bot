@@ -2,7 +2,6 @@ package command.commands.GameCommands;
 
 import command.ICommand;
 import minigames.Schafkopf.Schafkopf;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
@@ -24,7 +23,7 @@ public class schafkopfCommand implements ICommand {
 
     @Override
     public void handle(SlashCommandInteractionEvent event) throws IOException {
-
+/*
         switch (Objects.requireNonNull(event.getSubcommandName())) {
             case "game":
 
@@ -34,7 +33,7 @@ public class schafkopfCommand implements ICommand {
                 Member p4 = event.getOption("player3", event.getMember(), OptionMapping::getAsMember);
 
 
-                List<Emote> emotes = event.getJDA().getGuildById(910190811659010079L).getEmotes();
+                //List<Emote> emotes = event.getJDA().getGuildById(910190811659010079L).getEmotes();
 
                 System.out.println("scvhad");
 
@@ -96,7 +95,7 @@ public class schafkopfCommand implements ICommand {
                     System.out.println(Arrays.toString(e));
                 }
                 new Schafkopf(p1, p2, p3, p4);
-        }
+        }*/
     }
 
     @Override
@@ -125,6 +124,6 @@ public class schafkopfCommand implements ICommand {
                                 )
 
                         )
-                ).setDefaultEnabled(true);
+                );
     }
 }

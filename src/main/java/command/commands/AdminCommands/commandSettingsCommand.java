@@ -3,9 +3,9 @@ package command.commands.AdminCommands;
 import command.ICommand;
 import core.CommandManager;
 import core.LiteSQL;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -73,11 +73,6 @@ public class commandSettingsCommand implements ICommand {
     }
 
     @Override
-    public Permission getPermission() {
-        return null;
-    }
-
-    @Override
     public CommandData getCommandData() {
         List<Command.Choice> choices = new ArrayList<>();
         for (ICommand cmd:CommandManager.commands) {
@@ -92,7 +87,8 @@ public class commandSettingsCommand implements ICommand {
                                             .addChoices(choices),
                                     new OptionData(OptionType.BOOLEAN,"boolean","boolean if you want to enable the command")
                                 ))
-                )).setDefaultEnabled(false);
+                ))
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     public String getButtonPrefix() {

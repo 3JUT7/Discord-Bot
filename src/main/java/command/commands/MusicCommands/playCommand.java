@@ -2,8 +2,8 @@ package command.commands.MusicCommands;
 
 
 import command.ICommand;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -31,7 +31,8 @@ public class playCommand implements ICommand {
 
     public CommandData getCommandData() {
         return Commands.slash(this.getName(), this.getHelp())
-                .addOption(OptionType.STRING,"Song name or url","the name of the song the bot should play").setDefaultEnabled(false);
+                .addOption(OptionType.STRING,"Song name or url","the name of the song the bot should play")
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     /*
@@ -45,10 +46,6 @@ public class playCommand implements ICommand {
     }
 
      */
-
-    public Permission getPermission() {
-        return null;
-    }
 
     public String getButtonPrefix() {
         return "none";

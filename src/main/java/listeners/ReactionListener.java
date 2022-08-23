@@ -27,7 +27,7 @@ public class ReactionListener extends ListenerAdapter {
 
 
 
-                    msg.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("upvote"));
+                    //msg.getReactions().stream().filter(messageReaction -> messageReaction.getReactionEmote().getName().equals("upvote"));
 
                     QuizduellCommand.quizduellReactionEventHandler(event);
 

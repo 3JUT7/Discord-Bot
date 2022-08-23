@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -42,7 +43,7 @@ public class changeNicknameCommand implements ICommand {
     @Override
     public CommandData getCommandData() {
         return Commands.slash(this.getName(), this.getHelp())
-                .setDefaultEnabled(false)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
                 .addOptions(List.of(
                         new OptionData(OptionType.ROLE,"role", "The Role the user needs to have to get his nickname changed",true),
                         new OptionData(OptionType.STRING,"nickname","The nickname the members get", true)

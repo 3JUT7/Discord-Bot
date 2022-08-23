@@ -4,6 +4,7 @@ import command.ICommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -20,8 +21,8 @@ public class voiceMoveCommand implements ICommand {
         MessageChannel channel = event.getChannel();
         Guild guild = event.getGuild();
 
-        AudioChannel channelMoveFrom = (AudioChannel) event.getOption("channelfrom").getAsGuildChannel();
-        AudioChannel channelMoveTo = (AudioChannel) event.getOption("channelto").getAsGuildChannel();
+        AudioChannel channelMoveFrom = (AudioChannel) event.getOption("channelfrom").getAsChannel();
+        AudioChannel channelMoveTo = (AudioChannel) event.getOption("channelto").getAsChannel();
 
 
         if (!member.hasPermission(Permission.VOICE_MOVE_OTHERS)){
@@ -66,11 +67,7 @@ public class voiceMoveCommand implements ICommand {
                 new OptionData(OptionType.CHANNEL, "channelto", "The Channel where to move the Members to. Needs to be a voice channel").setRequired(true)
 
             )
-        ).setDefaultEnabled(false);
-    }
-
-    public Permission getPermission() {
-        return null;
+        ).setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     public String getButtonPrefix() {

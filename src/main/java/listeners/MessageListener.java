@@ -3,7 +3,6 @@ package listeners;
         import command.ICommand;
         import core.CommandManager;
         import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-        import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
         import net.dv8tion.jda.api.entities.*;
         import net.dv8tion.jda.api.hooks.ListenerAdapter;
 

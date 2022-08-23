@@ -9,6 +9,7 @@ import command.commands.QuizduellCommands.QuizduellCommand;
 import command.commands.UserTrackerCommands.UserTracker;
 import command.commands.UtilityCommands.helpCommand;
 import command.commands.UtilityCommands.pingCommand;
+import command.commands.UtilityCommands.qrCodeCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import util.Config;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 public class CommandManager {
+
     public static List<ICommand> commands = new ArrayList<>();
 
     public CommandManager(){
@@ -42,6 +44,7 @@ public class CommandManager {
         addCommand(new QuizduellCommand());
         //addCommand(new UserTracker());
         addCommand(new schafkopfCommand());
+        addCommand(new qrCodeCommand());
 
     }
 

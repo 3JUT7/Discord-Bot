@@ -1,11 +1,12 @@
 package command.commands.ManagemantCommands;
 
 import command.ICommand;
-import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Channel;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -27,7 +28,7 @@ public class purgeCommand implements ICommand {
 
         List<Message> messages = new ArrayList<>();
 
-        TextChannel channel = event.getTextChannel();
+        TextChannel channel = (TextChannel) event.getChannel();
         Integer amount = toIntExact(event.getOption("amount").getAsLong());
 
         int i = amount;
@@ -79,13 +80,11 @@ public class purgeCommand implements ICommand {
     }
 
     @Override
-    public Permission getPermission() {
-        return null;
-    }
-
-    @Override
     public CommandData getCommandData() {
-        return Commands.slash(this.getName(), this.getHelp()).addOption(OptionType.INTEGER,"amount","amount of messages to purge", true).setDefaultEnabled(false);
+        return Commands.slash(this.getName(), this.getHelp())
+                .addOption(OptionType.INTEGER,"amount","amount of messages to purge", true)
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED);
+
     }
 
     @Override

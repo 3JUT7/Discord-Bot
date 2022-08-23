@@ -2,12 +2,10 @@ package command.commands.UtilityCommands;
 
 import command.ICommand;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-
-import java.util.List;
 
 public class pingCommand implements ICommand {
     @Override
@@ -31,11 +29,9 @@ public class pingCommand implements ICommand {
     }
 
     public CommandData getCommandData() {
-        return Commands.slash(this.getName(), this.getHelp()).setDefaultEnabled(false);
-    }
+        return Commands.slash(this.getName(), this.getHelp())
 
-    public Permission getPermission() {
-        return null;
+                .setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     public String getButtonPrefix() {
